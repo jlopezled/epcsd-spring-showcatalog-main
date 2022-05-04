@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="EntryPointsManager">
+    <list size="10">
+      <item index="0" class="java.lang.String" itemvalue="javax.persistence.Column" />
+      <item index="1" class="java.lang.String" itemvalue="javax.persistence.ManyToOne" />
+      <item index="2" class="java.lang.String" itemvalue="org.springframework.context.annotation.Bean" />
+      <item index="3" class="java.lang.String" itemvalue="org.springframework.context.annotation.Configuration" />
+      <item index="4" class="java.lang.String" itemvalue="org.springframework.web.bind.annotation.ControllerAdvice" />
+      <item index="5" class="java.lang.String" itemvalue="org.springframework.web.bind.annotation.DeleteMapping" />
+      <item index="6" class="java.lang.String" itemvalue="org.springframework.web.bind.annotation.ExceptionHandler" />
+      <item index="7" class="java.lang.String" itemvalue="org.springframework.web.bind.annotation.GetMapping" />
+      <item index="8" class="java.lang.String" itemvalue="org.springframework.web.bind.annotation.PostMapping" />
+      <item index="9" class="java.lang.String" itemvalue="org.springframework.web.bind.annotation.RestController" />
+    </list>
+    <writeAnnotations>
+      <writeAnnotation name="org.springframework.beans.factory.annotation.Autowired" />
+      <writeAnnotation name="org.springframework.beans.factory.annotation.Value" />
+    </writeAnnotations>
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" project-jdk-name="openjdk-18" project-jdk-type="JavaSDK" />
+</project>
