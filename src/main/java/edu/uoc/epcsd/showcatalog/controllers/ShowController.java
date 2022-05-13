@@ -139,7 +139,7 @@ public class ShowController {
                 }
             }
             try {
-                kafkaTemplate.send(KafkaConstants.COMMAND_ADD, entity);
+                kafkaTemplate.send(KafkaConstants.SHOW_TOPIC + KafkaConstants.SEPARATOR + KafkaConstants.COMMAND_ADD, entity);
             } catch (org.apache.kafka.common.errors.SerializationException e) {
                 throw new KafkaSerializationException(e.toString());
             }
