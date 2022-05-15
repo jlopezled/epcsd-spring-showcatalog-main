@@ -3,15 +3,16 @@ package edu.uoc.epcsd.showcatalog.entities;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonView;
 import edu.uoc.epcsd.showcatalog.model.StatusEnum;
-import edu.uoc.epcsd.showcatalog.model.Views;
 import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.StringJoiner;
+
 
 @Entity
 @ToString
@@ -36,26 +37,26 @@ public class Show {
     @Column(name = "price")
     private Float price;
 
-    @Column(name="duration")
+    @Column(name = "duration")
     private Long duration;
 
-    @Column(name="capacity")
+    @Column(name = "capacity")
     private Long capacity;
 
     @JsonFormat(
             shape = JsonFormat.Shape.STRING,
             pattern = "yyyy-MM-dd")
-    @Column(name="on_sale_date")
+    @Column(name = "on_sale_date")
     private Date onSaleDate;
 
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name="status")
+    @Column(name = "status")
     private StatusEnum status = StatusEnum.CREATED;
 
     @OneToMany(mappedBy = "show")
-    @JsonProperty(value= "listOfCategories")
+    @JsonProperty(value = "listOfCategories")
     private Set<CategorizedShow> categorizedShows = new HashSet<>();
 
     @Transient
@@ -75,7 +76,7 @@ public class Show {
         this.categorizedShows.add(c);
     }
 
-/**
+    /**
      * @return A String containing all categories delimited by '|'
      */
     public String getCategories() {

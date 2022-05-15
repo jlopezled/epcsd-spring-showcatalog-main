@@ -1,11 +1,13 @@
 package edu.uoc.epcsd.showcatalog.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonView;
 import edu.uoc.epcsd.showcatalog.model.StatusEnum;
-import edu.uoc.epcsd.showcatalog.model.Views;
 import lombok.*;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -35,20 +37,17 @@ public class Performance {
     @Column(name = "time")
     private LocalTime time;
 
-    @Column(name="streaming_url")
+    @Column(name = "streaming_url")
     private String streamingUrl;
 
     @NotNull
-    @Column(name="remaining_seats")
+    @Column(name = "remaining_seats")
     private Long remainingSeats;
 
     @NotNull
     @Enumerated(EnumType.STRING)
-    @Column(name="status")
+    @Column(name = "status")
     private StatusEnum status = StatusEnum.CREATED;
-
-
-
 
 
 }

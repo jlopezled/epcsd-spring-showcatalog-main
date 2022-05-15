@@ -5,6 +5,11 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class Utils {
+
+    private Utils() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static LocalDate dateToLocalDate(Date d) {
         Instant instant = d.toInstant();
         ZonedDateTime zdt = instant.atZone(ZoneId.systemDefault());

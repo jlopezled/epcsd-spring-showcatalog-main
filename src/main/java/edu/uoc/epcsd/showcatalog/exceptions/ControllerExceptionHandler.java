@@ -30,7 +30,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
      * @return the response entity
      */
     @ExceptionHandler(value = {NotFoundException.class})
-    public ResponseEntity<?> notFoundException(NotFoundException ex, WebRequest request) {
+    public ResponseEntity<Object> notFoundException(NotFoundException ex, WebRequest request) {
         StringBuilder bodyOfResponse = new StringBuilder();
 
         bodyOfResponse.append("Database error: ").append(ex.getMessage()).append("\n");
@@ -39,7 +39,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(value = {DataIntegrityException.class})
-    public ResponseEntity<?> DataIntegrityException(DataIntegrityException ex, WebRequest request) {
+    public ResponseEntity<Object> dataIntegrityException(DataIntegrityException ex, WebRequest request) {
         StringBuilder bodyOfResponse = new StringBuilder();
 
         bodyOfResponse.append("Database error: ").append(ex.getMessage()).append("\n");
@@ -55,7 +55,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
      * @return the response entity
      */
     @ExceptionHandler(value = {InvalidDataException.class})
-    public ResponseEntity<?> invalidDataException(InvalidDataException ex, WebRequest request) {
+    public ResponseEntity<Object> invalidDataException(InvalidDataException ex, WebRequest request) {
         StringBuilder bodyOfResponse = new StringBuilder();
 
         List<FieldError> errors = ex.getResult().getFieldErrors();

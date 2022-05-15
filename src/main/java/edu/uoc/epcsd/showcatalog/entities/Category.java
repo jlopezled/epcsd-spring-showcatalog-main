@@ -1,8 +1,6 @@
 package edu.uoc.epcsd.showcatalog.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonView;
-import edu.uoc.epcsd.showcatalog.model.Views;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,11 +17,12 @@ import java.util.Set;
 @Table(name = "CATEGORY")
 public class Category {
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false,unique = true)
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
     @JsonIgnore
