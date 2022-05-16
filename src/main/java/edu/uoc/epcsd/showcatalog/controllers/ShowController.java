@@ -19,6 +19,9 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
+/**
+ * The type Show controller.
+ */
 @Log4j2
 @RestController
 @RequestMapping("/shows")
@@ -27,18 +30,36 @@ public class ShowController {
     @Autowired
     private ShowService showService;
 
+    /**
+     * Find shows by name.
+     *
+     * @param name the name
+     * @return a list with all shows that match with the name provieded
+     */
     @GetMapping
     public ResponseEntity<List<Show>> findShowsByName(@RequestParam String name) {
         log.trace("findShowsByName");
         return ResponseEntity.ok(showService.findShowsByName(name));
     }
 
+    /**
+     * Find one show.
+     *
+     * @param showId the show id
+     * @return the show with the id provided
+     */
     @GetMapping("/{id}")
     public ResponseEntity<Show> findOneShow(@PathVariable("id") Long showId) {
         log.trace("findOneShow");
         return ResponseEntity.ok(showService.findOneShow(showId));
     }
 
+    /**
+     * Find one show performances.
+     *
+     * @param showId the show id
+     * @return a list with all the performances of the show with the id provided
+     */
     @GetMapping("/{id}/performances")
     public ResponseEntity<List<Performance>> findOneShowPerformances(@PathVariable("id") Long showId) {
         log.trace("findOneShowPerformances");
@@ -47,11 +68,17 @@ public class ShowController {
 
     }
 
+    /**
+     * Create show response.
+     *
+     * @param dto    the dto
+     * @param result the result
+     * @return the response entity
+     */
     @PostMapping
     @Transactional
     public ResponseEntity<Show> createShow(@Valid @RequestBody ShowDto dto, @NotNull BindingResult result) {
-        log.trace("createCategory");
-
+        log.trace("createShow");
         if (result.hasErrors()) {
             throw new InvalidDataException(result);
         } else {
@@ -59,6 +86,11 @@ public class ShowController {
         }
     }
 
+    /**
+     * Delete a show.
+     *
+     * @param id the id
+     */
     @DeleteMapping("/{id}")
     @ResponseStatus(value = HttpStatus.OK, reason = "Deleted")
     public void delete(@PathVariable Long id) {
@@ -66,9 +98,11 @@ public class ShowController {
     }
 
     /**
-     * Create performance show.
+     * Create a new performance .
      *
-     * @param dto the dto
+     * @param showId the show id
+     * @param dto    the dto
+     * @param result the result
      * @return the show
      * @throws NotFoundException the not found exception
      */
@@ -88,6 +122,12 @@ public class ShowController {
 
     }
 
+    /**
+     * Open a show for it can be exposed for sale.
+     *
+     * @param showId the show id
+     * @return the response entity
+     */
     @PutMapping("/{id}/open")
     public ResponseEntity<Show> openShow(@PathVariable("id") Long showId) {
         log.trace("openShow");
@@ -95,9 +135,15 @@ public class ShowController {
 
     }
 
+    /**
+     * Cancel show and all its performances.
+     *
+     * @param showId the show id
+     * @return the response entity
+     */
     @PutMapping("/{id}/cancel")
     public ResponseEntity<Show> cancelShow(@PathVariable("id") Long showId) {
-        log.trace("openShow");
+        log.trace("cancelShow");
         return ResponseEntity.ok(showService.cancelShow(showId));
 
     }

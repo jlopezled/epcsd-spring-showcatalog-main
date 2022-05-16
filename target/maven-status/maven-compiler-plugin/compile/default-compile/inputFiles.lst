@@ -1,5 +1,4 @@
 C:\epcsd-spring-main\epcsd-spring-showcatalog-main\src\main\java\edu\uoc\epcsd\showcatalog\model\CategoryDto.java
-C:\epcsd-spring-main\epcsd-spring-showcatalog-main\src\main\java\edu\uoc\epcsd\showcatalog\repositories\CategorizedShowRepository.java
 C:\epcsd-spring-main\epcsd-spring-showcatalog-main\src\main\java\edu\uoc\epcsd\showcatalog\model\PerformanceDto.java
 C:\epcsd-spring-main\epcsd-spring-showcatalog-main\src\main\java\edu\uoc\epcsd\showcatalog\model\StatusEnum.java
 C:\epcsd-spring-main\epcsd-spring-showcatalog-main\src\main\java\edu\uoc\epcsd\showcatalog\exceptions\NotFoundException.java
@@ -14,7 +13,6 @@ C:\epcsd-spring-main\epcsd-spring-showcatalog-main\src\main\java\edu\uoc\epcsd\s
 C:\epcsd-spring-main\epcsd-spring-showcatalog-main\src\main\java\edu\uoc\epcsd\showcatalog\kafka\KafkaTopicConfig.java
 C:\epcsd-spring-main\epcsd-spring-showcatalog-main\src\main\java\edu\uoc\epcsd\showcatalog\service\CategoryService.java
 C:\epcsd-spring-main\epcsd-spring-showcatalog-main\src\main\java\edu\uoc\epcsd\showcatalog\Utils.java
-C:\epcsd-spring-main\epcsd-spring-showcatalog-main\src\main\java\edu\uoc\epcsd\showcatalog\entities\CategorizedShow.java
 C:\epcsd-spring-main\epcsd-spring-showcatalog-main\src\main\java\edu\uoc\epcsd\showcatalog\model\ShowDto.java
 C:\epcsd-spring-main\epcsd-spring-showcatalog-main\src\main\java\edu\uoc\epcsd\showcatalog\controllers\CategoryController.java
 C:\epcsd-spring-main\epcsd-spring-showcatalog-main\src\main\java\edu\uoc\epcsd\showcatalog\exceptions\InvalidDataException.java

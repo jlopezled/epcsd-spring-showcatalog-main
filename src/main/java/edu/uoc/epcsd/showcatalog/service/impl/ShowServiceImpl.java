@@ -88,10 +88,6 @@ public class ShowServiceImpl implements ShowService {
     }
 
     public void delete(@PathVariable Long id) {
-        Show showEntity = findOneShow(id);
-        log.trace("Delete categories associated");
-        //showEntity.removeAllCategories();
-        //showRepository.save(showEntity);
         log.trace("Delete show");
         showRepository.deleteById(id);
 
@@ -106,6 +102,7 @@ public class ShowServiceImpl implements ShowService {
         entity.setDate(Utils.dateToLocalDate(dto.getDate()));
         entity.setTime(Utils.dateToLocalTime(dto.getTime()));
         entity.setStreamingUrl(dto.getStreamingUrl());
+        entity.setRemainingSeats(showEntity.getCapacity());
         showEntity.addPerformance(entity);
         return showRepository.save(showEntity);
 
@@ -139,9 +136,8 @@ public class ShowServiceImpl implements ShowService {
 
 
     public void deleteCategoryAssociated(Category category) {
-
-        //    categorizedShowRepository.deleteByCategory(category);
         for (Show s : category.getShows()) {
+            log.trace("Remove the category from shows");
             s.removeCategory(category);
             showRepository.save(s);
         }

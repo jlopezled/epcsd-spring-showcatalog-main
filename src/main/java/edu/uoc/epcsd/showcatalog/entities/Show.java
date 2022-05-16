@@ -77,12 +77,11 @@ public class Show {
 
     public void addCategory(Category c) {
         this.categories.add(c);
-
     }
 
     public void removeCategory(Category c) {
         this.categories.remove(c);
     }
-    
+
 
 }

@@ -21,6 +21,9 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 
+/**
+ * The type Category controller.
+ */
 @Log4j2
 @RestController
 @RequestMapping("/categories")
@@ -37,12 +40,23 @@ public class CategoryController {
     private ShowService showService;
 
 
+    /**
+     * Gets all categories.
+     *
+     * @return a list containing all categories
+     */
     @GetMapping
     public ResponseEntity<List<Category>> getAllCategories() {
         log.trace("getAllCategories");
         return ResponseEntity.ok(categoryRepository.findAll());
     }
 
+    /**
+     * Find shows by category.
+     *
+     * @param categoryId the category id
+     * @return a list containing all shows that match the category provided
+     */
     @GetMapping("/{id}/shows")
     public ResponseEntity<List<Show>> findShowsByCategory(@Valid @PathVariable("id") Long categoryId) {
         log.trace("findShowsByCategory");
@@ -50,6 +64,13 @@ public class CategoryController {
         return ResponseEntity.ok(showService.findShowsByCategory(categoryEntity));
     }
 
+    /**
+     * Create category.
+     *
+     * @param dto    the dto
+     * @param result the result
+     * @return the new category created
+     */
     @PostMapping
     public ResponseEntity<Category> createCategory(@Valid @RequestBody CategoryDto dto, @NotNull BindingResult result) {
         log.trace("createCategory");
@@ -62,11 +83,16 @@ public class CategoryController {
 
     }
 
+    /**
+     * Delete a category and all its associations with shows
+     *
+     * @param id the id
+     */
     @DeleteMapping("/{id}")
     @ResponseStatus(value = HttpStatus.OK, reason = "Deleted")
     @Transactional
     public void delete(@PathVariable Long id) {
-
+        log.trace("deleteCategory");
         Category categoryEntity = categoryService.findOneCategory(id);
         showService.deleteCategoryAssociated(categoryEntity);
         categoryRepository.deleteById(id);
