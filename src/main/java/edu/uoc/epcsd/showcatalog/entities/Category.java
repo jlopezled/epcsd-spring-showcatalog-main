@@ -10,7 +10,6 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -26,11 +25,11 @@ public class Category {
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "category")
-    private Set<CategorizedShow> shows = new HashSet<>();
+    @ManyToMany(mappedBy = "categories")
+    private Set<Show> shows = new HashSet<>();
 
-    public void addCategorizedShow(CategorizedShow c) {
-        this.shows.add(c);
+    public void addShow(Show s) {
+        this.shows.add(s);
     }
 
 

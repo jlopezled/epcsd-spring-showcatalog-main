@@ -20,6 +20,9 @@ public class ShowDto {
     @Size(max = 50, message = "Show name must be shorter than 50 characters")
     private String name;
 
+    @Size(max = 255, message = "Show description  must be shorter than 255 characters")
+    private String description;
+
     @Size(max = 255, message = "Image attribute must be shorter than 256 characters")
     private String image;
 
@@ -28,14 +31,14 @@ public class ShowDto {
     private Float price;
 
     @Min(value = 0L, message = "The duration must be positive")
-    @Column(name="duration")
+    @Column(name = "duration")
     private Long duration;
 
     @Min(value = 0L, message = "The capacity must be positive")
-    @Column(name="capacity")
+    @Column(name = "capacity")
     private Long capacity;
 
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @NotNull(message = "On sale date is required")
     private Date onSaleDate;
 

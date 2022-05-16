@@ -55,7 +55,6 @@ public class ShowController {
         if (result.hasErrors()) {
             throw new InvalidDataException(result);
         } else {
-            showService.createShow(dto);
             return ResponseEntity.ok(showService.createShow(dto));
         }
     }

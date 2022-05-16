@@ -1,6 +1,7 @@
 package edu.uoc.epcsd.showcatalog.service.impl;
 
 import edu.uoc.epcsd.showcatalog.entities.Category;
+import edu.uoc.epcsd.showcatalog.entities.Show;
 import edu.uoc.epcsd.showcatalog.exceptions.DataIntegrityException;
 import edu.uoc.epcsd.showcatalog.exceptions.NotFoundException;
 import edu.uoc.epcsd.showcatalog.model.CategoryDto;
@@ -37,6 +38,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     public void delete(Long id) {
+
+        Category categoryEntity = findOneCategory(id);
+        for (Show s : categoryEntity.getShows()) {
+            s.removeCategory(categoryEntity);
+        }
         categoryRepository.deleteById(id);
     }
 

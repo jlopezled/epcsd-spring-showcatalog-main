@@ -40,7 +40,6 @@ public class CategoryController {
     @GetMapping
     public ResponseEntity<List<Category>> getAllCategories() {
         log.trace("getAllCategories");
-
         return ResponseEntity.ok(categoryRepository.findAll());
     }
 

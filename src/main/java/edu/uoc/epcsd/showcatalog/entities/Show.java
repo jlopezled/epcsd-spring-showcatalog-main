@@ -2,7 +2,6 @@ package edu.uoc.epcsd.showcatalog.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import edu.uoc.epcsd.showcatalog.model.StatusEnum;
 import lombok.*;
 
@@ -11,14 +10,13 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.StringJoiner;
 
 
 @Entity
 @ToString
 @Getter
 @Setter
-@EqualsAndHashCode
+//@EqualsAndHashCode
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -30,6 +28,9 @@ public class Show {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "description")
+    private String description;
 
     @Column(name = "image")
     private String image;
@@ -55,37 +56,33 @@ public class Show {
     @Column(name = "status")
     private StatusEnum status = StatusEnum.CREATED;
 
-    @OneToMany(mappedBy = "show")
-    @JsonProperty(value = "listOfCategories")
-    private Set<CategorizedShow> categorizedShows = new HashSet<>();
-
-    @Transient
-    private String categories;
-
     @JsonIgnore
     @ElementCollection
     @CollectionTable(name = "PERFORMANCE", joinColumns = @JoinColumn(name = "ID_SHOW"))
     private Set<Performance> performances = new HashSet<>();
 
+
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(
+            name = "CATEGORY_SHOW",
+            joinColumns = @JoinColumn(name = "SHOW_ID"),
+            inverseJoinColumns = @JoinColumn(name = "CATEGORY_ID")
+    )
+
+    private Set<Category> categories = new HashSet<>();
+
     public void addPerformance(Performance performance) {
         this.performances.add(performance);
     }
 
-
-    public void addCategorizedShow(CategorizedShow c) {
-        this.categorizedShows.add(c);
-    }
-
-    /**
-     * @return A String containing all categories delimited by '|'
-     */
-    public String getCategories() {
-        StringJoiner res = new StringJoiner("|");
-        for (CategorizedShow c : categorizedShows) {
-            res.add(c.getCategory().getName());
-        }
-        return res.toString();
+    public void addCategory(Category c) {
+        this.categories.add(c);
 
     }
+
+    public void removeCategory(Category c) {
+        this.categories.remove(c);
+    }
+    
 
 }

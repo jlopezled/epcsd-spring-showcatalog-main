@@ -1,7 +1,6 @@
 package edu.uoc.epcsd.showcatalog.service.impl;
 
 import edu.uoc.epcsd.showcatalog.Utils;
-import edu.uoc.epcsd.showcatalog.entities.CategorizedShow;
 import edu.uoc.epcsd.showcatalog.entities.Category;
 import edu.uoc.epcsd.showcatalog.entities.Performance;
 import edu.uoc.epcsd.showcatalog.entities.Show;
@@ -11,7 +10,7 @@ import edu.uoc.epcsd.showcatalog.kafka.KafkaConstants;
 import edu.uoc.epcsd.showcatalog.model.PerformanceDto;
 import edu.uoc.epcsd.showcatalog.model.ShowDto;
 import edu.uoc.epcsd.showcatalog.model.StatusEnum;
-import edu.uoc.epcsd.showcatalog.repositories.CategorizedShowRepository;
+import edu.uoc.epcsd.showcatalog.repositories.CategoryRepository;
 import edu.uoc.epcsd.showcatalog.repositories.ShowRepository;
 import edu.uoc.epcsd.showcatalog.service.CategoryService;
 import edu.uoc.epcsd.showcatalog.service.ShowService;
@@ -22,7 +21,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -34,7 +32,7 @@ public class ShowServiceImpl implements ShowService {
     private ShowRepository showRepository;
 
     @Autowired
-    private CategorizedShowRepository categorizedShowRepository;
+    private CategoryRepository categoryRepository;
 
     @Autowired
     private CategoryService categoryService;
@@ -46,6 +44,7 @@ public class ShowServiceImpl implements ShowService {
     public Show createShow(ShowDto dto) {
         Show entity = new Show();
         entity.setName(dto.getName());
+        entity.setDescription(dto.getDescription());
         entity.setImage(dto.getImage());
         entity.setPrice(dto.getPrice());
         entity.setDuration(dto.getDuration());
@@ -58,11 +57,14 @@ public class ShowServiceImpl implements ShowService {
         if (dto.getCategoriesIds() != null && !dto.getCategoriesIds().isEmpty()) {
             for (Long id : dto.getCategoriesIds()) {
                 Category categoryEntity = categoryService.findOneCategory(id);
-                CategorizedShow category = new CategorizedShow(entity, categoryEntity);
-                entity.addCategorizedShow(category);
-                categorizedShowRepository.save(category);
+                // Create associations with Categories
+                categoryEntity.addShow(entity);
+                entity.addCategory(categoryEntity);
+                categoryRepository.save(categoryEntity);
             }
         }
+
+
         try {
             kafkaTemplate.send(KafkaConstants.SHOW_TOPIC + KafkaConstants.SEPARATOR + KafkaConstants.COMMAND_ADD, entity);
             log.trace("New show message sent to Kakfa");
@@ -87,8 +89,9 @@ public class ShowServiceImpl implements ShowService {
 
     public void delete(@PathVariable Long id) {
         Show showEntity = findOneShow(id);
-        log.trace("Delete categories associations");
-        categorizedShowRepository.deleteByShow(showEntity);
+        log.trace("Delete categories associated");
+        //showEntity.removeAllCategories();
+        //showRepository.save(showEntity);
         log.trace("Delete show");
         showRepository.deleteById(id);
 
@@ -131,16 +134,20 @@ public class ShowServiceImpl implements ShowService {
     }
 
     public List<Show> findShowsByCategory(Category category) {
-        List<Show> result = new ArrayList<>();
-        categorizedShowRepository.findAllByCategory(category).forEach(categorizedShow -> result.add(categorizedShow.getShow()));
-        return result;
+        return showRepository.findAllByCategory(category);
     }
 
 
     public void deleteCategoryAssociated(Category category) {
 
-        categorizedShowRepository.deleteByCategory(category);
+        //    categorizedShowRepository.deleteByCategory(category);
+        for (Show s : category.getShows()) {
+            s.removeCategory(category);
+            showRepository.save(s);
+        }
+
     }
+
 
 }
 
