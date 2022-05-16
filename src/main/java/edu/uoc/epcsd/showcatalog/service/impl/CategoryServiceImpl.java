@@ -1,7 +1,6 @@
 package edu.uoc.epcsd.showcatalog.service.impl;
 
 import edu.uoc.epcsd.showcatalog.entities.Category;
-import edu.uoc.epcsd.showcatalog.entities.Show;
 import edu.uoc.epcsd.showcatalog.exceptions.DataIntegrityException;
 import edu.uoc.epcsd.showcatalog.exceptions.NotFoundException;
 import edu.uoc.epcsd.showcatalog.model.CategoryDto;
@@ -11,11 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CategoryServiceImpl implements CategoryService {
 
     @Autowired
     private CategoryRepository categoryRepository;
+
+    public List<Category> findAllCategories() {
+        return categoryRepository.findAll();
+    }
 
     public Category findOneCategory(Long id) {
 
@@ -39,10 +44,6 @@ public class CategoryServiceImpl implements CategoryService {
 
     public void delete(Long id) {
 
-        Category categoryEntity = findOneCategory(id);
-        for (Show s : categoryEntity.getShows()) {
-            s.removeCategory(categoryEntity);
-        }
         categoryRepository.deleteById(id);
     }
 

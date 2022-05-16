@@ -4,7 +4,6 @@ import edu.uoc.epcsd.showcatalog.entities.Category;
 import edu.uoc.epcsd.showcatalog.entities.Show;
 import edu.uoc.epcsd.showcatalog.exceptions.InvalidDataException;
 import edu.uoc.epcsd.showcatalog.model.CategoryDto;
-import edu.uoc.epcsd.showcatalog.repositories.CategoryRepository;
 import edu.uoc.epcsd.showcatalog.service.CategoryService;
 import edu.uoc.epcsd.showcatalog.service.ShowService;
 import lombok.extern.log4j.Log4j2;
@@ -31,9 +30,6 @@ import java.util.List;
 public class CategoryController {
 
     @Autowired
-    private CategoryRepository categoryRepository;
-
-    @Autowired
     private CategoryService categoryService;
 
     @Autowired
@@ -48,7 +44,7 @@ public class CategoryController {
     @GetMapping
     public ResponseEntity<List<Category>> getAllCategories() {
         log.trace("getAllCategories");
-        return ResponseEntity.ok(categoryRepository.findAll());
+        return ResponseEntity.ok(categoryService.findAllCategories());
     }
 
     /**
@@ -94,8 +90,9 @@ public class CategoryController {
     public void delete(@PathVariable Long id) {
         log.trace("deleteCategory");
         Category categoryEntity = categoryService.findOneCategory(id);
+        log.trace("Delete all associations with shows");
         showService.deleteCategoryAssociated(categoryEntity);
-        categoryRepository.deleteById(id);
+        categoryService.delete(id);
 
 
     }
